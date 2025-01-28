@@ -3,89 +3,62 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import androidx.compose.ui.draw.clip
 
 @Composable
 @Preview
-fun Login() {
+fun Login(onLogin: () -> Unit) {
     var user by remember { mutableStateOf("") }
     var passwd by remember { mutableStateOf("") }
 
     MaterialTheme {
-        // Cuerpo principal
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color(0xFFd3d3d3))
-                .padding(16.dp),
+                .background(Color(0xFFd3d3d3)),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Título
             Text(
                 text = "Log in",
                 fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Cursive,
-                color = Color(0xFF333333)
+                color = Color.Black
             )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Caja del formulario
-            Box(
+            Spacer(modifier = Modifier.height(24.dp))
+            Column(
                 modifier = Modifier
-                    .width(400.dp)
-                    .padding(16.dp)
+                    .width(300.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.White)
-                    .padding(24.dp),
-                contentAlignment = Alignment.Center
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                OutlinedTextField(
+                    value = user,
+                    onValueChange = { user = it },
+                    label = { Text("Usuario") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = passwd,
+                    onValueChange = { passwd = it },
+                    label = { Text("Contraseña") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Button(
+                    onClick = onLogin,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    OutlinedTextField(
-                        value = user,
-                        onValueChange = { user = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text("Usuario") }
-                    )
-                    OutlinedTextField(
-                        value = passwd,
-                        onValueChange = { passwd = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text("Contraseña") }
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Button(
-                        onClick = {
-
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(text = "Iniciar sesión", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                    }
+                    Text("Iniciar sesión")
                 }
             }
         }
@@ -93,11 +66,17 @@ fun Login() {
 }
 
 fun main() = application {
+    var showWelcomeScreen by remember { mutableStateOf(false) }
+
     Window(
         onCloseRequest = ::exitApplication,
         title = "Login",
-        state = rememberWindowState(width = 500.dp, height = 600.dp)
+        state = rememberWindowState(width = 900.dp, height = 800.dp)
     ) {
-        Login()
+        if (showWelcomeScreen) {
+            WelcomeScreen()
+        } else {
+            Login(onLogin = { showWelcomeScreen = true })
+        }
     }
 }
