@@ -23,7 +23,6 @@ fun App() {
 }
 
 fun main() = application {
-    var showWelcomeScreen by remember { mutableStateOf(false) }
     Window(
         onCloseRequest = ::exitApplication,
         title = "Login",
