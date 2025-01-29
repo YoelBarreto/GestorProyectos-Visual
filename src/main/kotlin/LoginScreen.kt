@@ -9,12 +9,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.platform.Font
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Login() {
+fun LoginScreen() {
     var user by remember { mutableStateOf("") }
     var passwd by remember { mutableStateOf("") }
 
@@ -28,12 +31,14 @@ fun Login() {
         Text(
             text = "Log in",
             fontSize = 32.sp,
-            color = Color.Black
+            color = Color.Black,
+            fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(24.dp))
         Column(
             modifier = Modifier
                 .width(300.dp)
+                .shadow(16.dp, shape = RoundedCornerShape(12.dp))
                 .clip(RoundedCornerShape(12.dp))
                 .background(Color.White)
                 .padding(16.dp),
