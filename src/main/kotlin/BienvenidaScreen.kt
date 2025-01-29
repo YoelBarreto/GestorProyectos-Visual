@@ -3,6 +3,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +32,7 @@ fun WelcomeScreen() {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Bienvenido, Pedro Sanchez",
+                text = "Bienvenido, Pedro Sanchez (Administrador de izquierdas)",
                 color = Color.White,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
@@ -76,6 +77,34 @@ fun WelcomeScreen() {
             MenuOption(text = "Proyectos")
             MenuOption(text = "Proyecto")
             MenuOption(text = "Tarea")
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color.White)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Cerrar sesión",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.weight(1f)
+            )
+            Button(
+                onClick = { },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFdf1818))
+            ) {
+                Text(
+                    text = "Desconectar",
+                    color = Color.White
+                )
+            }
         }
     }
 }
