@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.random.Random
 
+// Datos temporales para los proyectos
+
 data class Proyecto(val nombre: String, val clientes: List<String>)
 
 fun generarClientes(): List<String> {
@@ -34,6 +36,8 @@ val proyectos = listOf(
     Proyecto("Subnautica 4", generarClientes()),
     Proyecto("Torrente 2 Rework", generarClientes())
 )
+
+
 
 @Composable
 @Preview
@@ -104,7 +108,6 @@ fun ProyectoItem(proyecto: Proyecto) {
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Nombre del proyecto a la izquierda
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = proyecto.nombre,
@@ -121,10 +124,8 @@ fun ProyectoItem(proyecto: Proyecto) {
                 color = Color.DarkGray
             )
         }
-
-        // Botón "Ver" a la derecha
         Button(
-            onClick = { /* Acción para ver detalles */ },
+            onClick = { /* Proyecto en concreto */ },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
         ) {
             Text(text = "Ver", color = Color.White)
