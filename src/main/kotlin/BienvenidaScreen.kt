@@ -58,6 +58,10 @@ fun WelcomeScreen() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        Option("Ver proyectos", "Entrar", 0xFF6200EA)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         // Menu de opciones
         Column(
             modifier = Modifier
@@ -73,57 +77,54 @@ fun WelcomeScreen() {
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )
-
-            MenuOption(text = "Proyectos")
-            MenuOption(text = "Proyecto")
-            MenuOption(text = "Tarea")
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(8.dp))
+                    .padding(horizontal = 16.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Text(
+                    text = "Proyectos",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color.White)
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Cerrar sesión",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier.weight(1f)
-            )
-            Button(
-                onClick = { },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFdf1818))
-            ) {
-                Text(
-                    text = "Desconectar",
-                    color = Color.White
-                )
-            }
-        }
+        Option("Cerrar sesión", "Desconectar", 0xFFdf1818)
     }
 }
 
 @Composable
-fun MenuOption(text: String) {
-    Box(
+fun Option(titulo: String, boton: String, color: Long) {
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
-            .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(8.dp))
-            .padding(horizontal = 16.dp),
-        contentAlignment = Alignment.CenterStart
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color.White)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = text,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color.Black
+            text = titulo,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier.weight(1f)
         )
+        Button(
+            onClick = { },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(color))
+        ) {
+            Text(
+                text = boton,
+                color = Color.White
+            )
+        }
     }
 }
