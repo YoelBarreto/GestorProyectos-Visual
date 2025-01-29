@@ -26,6 +26,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:3.0.3")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.3")
     implementation("io.ktor:ktor-client-cio:3.0.3")
+    // implementation("org.jetbrains.androidx.navigation:navigation-compose:2.8.0-alpha10")
 }
 
 compose.desktop {
