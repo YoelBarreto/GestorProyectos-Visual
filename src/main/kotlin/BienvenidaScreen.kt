@@ -72,26 +72,13 @@ fun WelcomeScreen() {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "Menú",
+                text = "Historial (Proyectos finalizados)",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-                    .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(8.dp))
-                    .padding(horizontal = 16.dp),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(
-                    text = "Proyectos",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
-                )
-            }
+            Proyecto("DANA", "29/10/2024")
+            Proyecto("Robo a minoristas", "7/6/2018")
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -126,5 +113,32 @@ fun Option(titulo: String, boton: String, color: Long) {
                 color = Color.White
             )
         }
+    }
+}
+
+@Composable
+fun Proyecto(titulo: String, fecha: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(8.dp))
+            .padding(horizontal = 16.dp),
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Text(
+            text = titulo,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
+        Text(
+            text = fecha,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            fontStyle = FontStyle.Italic,
+            color = Color.Red,
+            modifier = Modifier.align(Alignment.CenterEnd)
+        )
     }
 }
