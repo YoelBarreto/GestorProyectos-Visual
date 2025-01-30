@@ -21,16 +21,16 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 data class Tarea(val nombre: String)
 
 val tareas = listOf(
-    Tarea("Spiderman Home alone"),
-    Tarea("Ventanas furiosas"),
-    Tarea("Pistolas de goma"),
-    Tarea("Turistas asiaticos simulator"),
-    Tarea("Software cocina"),
-    Tarea("Ciudania descontrolada"),
-    Tarea("Robo minoristas 2"),
-    Tarea("Alexsoft Rework"),
-    Tarea("Subnautica 4"),
-    Tarea("Torrente 2 Rework")
+    Tarea("Autenticación de usuarios"),
+    Tarea("Optimizar base de datos"),
+    Tarea("Diseñar API de pagos"),
+    Tarea("Corregir bug de notificaciones"),
+    Tarea("Integrar Stripe"),
+    Tarea("Refactorizar backend"),
+    Tarea("Pruebas unitarias"),
+    Tarea("Crear dashboard"),
+    Tarea("Implementar chat en vivo"),
+    Tarea("Mejorar seguridad"),
 )
 
 class ProyectScreen(val nombre: String) : Screen {
@@ -160,7 +160,7 @@ class ProyectScreen(val nombre: String) : Screen {
 }
 
 @Composable
-fun TareaItem(tareas: Tarea){
+fun TareaItem(tarea: Tarea){
 
     val navigator = LocalNavigator.current
     Row(
@@ -172,7 +172,7 @@ fun TareaItem(tareas: Tarea){
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = tareas.nombre,
+                text = tarea.nombre,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
@@ -180,7 +180,7 @@ fun TareaItem(tareas: Tarea){
         }
         Button(
             onClick = {
-                navigator?.push(ProyectScreen(tareas.nombre))
+                // navigator?.push(ProyectScreen(tarea.nombre))
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
         ) {
