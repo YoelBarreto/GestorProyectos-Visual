@@ -180,7 +180,7 @@ fun TareaItem(tarea: Tarea){
         }
         Button(
             onClick = {
-                // navigator?.push(ProyectScreen(tarea.nombre))
+                navigator?.push(TareaScreen(tarea.nombre))
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
         ) {
