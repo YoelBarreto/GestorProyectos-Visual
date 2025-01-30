@@ -128,7 +128,9 @@ class ProyectosScreen : Screen {
 }
 
 @Composable
-fun ProyectoItem(proyecto: Proyecto) {
+fun ProyectoItem(proyecto: Proyecto){
+
+    val navigator = LocalNavigator.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -153,7 +155,9 @@ fun ProyectoItem(proyecto: Proyecto) {
             )
         }
         Button(
-            onClick = { /* Proyecto en concreto */ },
+            onClick = {
+                navigator?.push(ProyectScreen(proyecto.nombre))
+            },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
         ) {
             Text(text = "Ver", color = Color.White)
