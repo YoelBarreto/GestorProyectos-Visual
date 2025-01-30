@@ -13,6 +13,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import kotlin.random.Random
 
 // Datos temporales para los proyectos
@@ -39,83 +41,87 @@ val proyectos = listOf(
 
 
 
-@Composable
-@Preview
-fun ProyectosScreen() {
-    var filter by remember { mutableStateOf(true)}
+class ProyectosScreen : Screen {
+    @Composable
+    override fun Content() {
+        var filter by remember { mutableStateOf(true)}
+        val navigator = LocalNavigator.current
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFf5f5f5))
-            .padding(16.dp)
-    ) {
-        // Header con botón Volver
-        Row(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color(0xFF6200EA))
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(
-                onClick = { /* Acción para volver */ },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                modifier = Modifier.padding(end = 8.dp)
-            ) {
-                Text(text = "Volver", color = Color(0xFF6200EA))
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Lista de Proyectos",
-                    color = Color.White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Spacer(modifier = Modifier.weight(1f)) // Para empujar el botón a la derecha
-
-            Button(
-                onClick = { filter = !filter }, // Cambia el estado al hacer clic
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
-            ) {
-                Text(
-                    text = if (filter) "Filtrar: Todos" else "Filtrar: Mios",
-                    color = Color.White
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Lista de proyectos
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color.White)
+                .fillMaxSize()
+                .background(Color(0xFFf5f5f5))
                 .padding(16.dp)
         ) {
-            items(proyectos) { proyecto ->
-                ProyectoItem(proyecto)
-                Spacer(modifier = Modifier.height(12.dp))
+            // Header con botón Volver
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xFF6200EA))
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    onClick = {
+                        navigator?.pop()
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                    modifier = Modifier.padding(end = 8.dp)
+                ) {
+                    Text(text = "Volver", color = Color(0xFF6200EA))
+                }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Lista de Proyectos",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Spacer(modifier = Modifier.weight(1f)) // Para empujar el botón a la derecha
+
+                Button(
+                    onClick = { filter = !filter }, // Cambia el estado al hacer clic
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
+                ) {
+                    Text(
+                        text = if (filter) "Filtrar: Todos" else "Filtrar: Mios",
+                        color = Color.White
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Lista de proyectos
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color.White)
+                    .padding(16.dp)
+            ) {
+                items(proyectos) { proyecto ->
+                    ProyectoItem(proyecto)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
         }
     }
