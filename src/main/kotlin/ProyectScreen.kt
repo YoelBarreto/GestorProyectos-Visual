@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 
-class ProyectScreen : Screen {
+class ProyectScreen(val nombre: String) : Screen {
     @Composable
     override fun Content() {
 
@@ -28,70 +28,40 @@ class ProyectScreen : Screen {
                 .background(Color(0xFFf5f5f5))
                 .padding(16.dp)
         ) {
-            // Header
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp)
-                    .background(Color(0xFF6200EA), shape = RoundedCornerShape(8.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Bienvenido, Pedro Sanchez (Administrador de izquierdas)",
-                    color = Color.White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Text(
-                    text = "Esto es una aplicación la cual usa una API creada manualmente la cual simula una empresa llamada 'AlexSoft'.",
-                    fontSize = 18.sp,
-                    fontStyle = FontStyle.Italic
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
+            // Header con botón Volver
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(60.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(16.dp),
+                    .background(Color(0xFF6200EA))
+                    .padding(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Ver proyectos",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    modifier = Modifier.weight(1f)
-                )
                 Button(
                     onClick = {
-                        navigator?.push(ProyectosScreen())
+                        navigator?.pop()
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                    modifier = Modifier.padding(end = 8.dp)
+                ) {
+                    Text(text = "Volver", color = Color(0xFF6200EA))
+                }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Entrar",
-                        color = Color.White
+                        text = "Proyecto $nombre",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
                     )
                 }
             }
-
-
             Spacer(modifier = Modifier.height(16.dp))
 
             // Menu de opciones
@@ -110,63 +80,6 @@ class ProyectScreen : Screen {
                     color = Color.Black
                 )
             }
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Cerrar sesión",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    modifier = Modifier.weight(1f)
-                )
-                Button(
-                    onClick = {
-                        navigator?.pop()
-                    },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFdf1818))
-                ) {
-                    Text(
-                        text = "Desconectar",
-                        color = Color.White
-                    )
-                }
-            }
         }
-    }
-}
-
-@Composable
-fun Proyecto(titulo: String, fecha: String) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(8.dp))
-            .padding(horizontal = 16.dp),
-        contentAlignment = Alignment.CenterStart
-    ) {
-        Text(
-            text = titulo,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-        Text(
-            text = fecha,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Italic,
-            color = Color.Red,
-            modifier = Modifier.align(Alignment.CenterEnd)
-        )
     }
 }
