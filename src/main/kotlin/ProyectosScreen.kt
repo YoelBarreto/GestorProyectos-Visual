@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +42,8 @@ val proyectos = listOf(
 @Composable
 @Preview
 fun ProyectosScreen() {
+    var filter by remember { mutableStateOf(true)}
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -77,6 +79,26 @@ fun ProyectosScreen() {
                     color = Color.White,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(modifier = Modifier.weight(1f)) // Para empujar el botón a la derecha
+
+            Button(
+                onClick = { filter = !filter }, // Cambia el estado al hacer clic
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
+            ) {
+                Text(
+                    text = if (filter) "Filtrar: Todos" else "Filtrar: Mios",
+                    color = Color.White
                 )
             }
         }
