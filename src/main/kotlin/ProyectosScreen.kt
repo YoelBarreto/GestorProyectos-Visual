@@ -79,12 +79,20 @@ class ProyectosScreen : Screen {
                         .height(60.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "Lista de Proyectos",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Row {
+                        Text(
+                            text = "Lista de Proyectos",
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = " Activos",
+                            fontSize = 20.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
             }
 
