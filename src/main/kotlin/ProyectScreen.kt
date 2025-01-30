@@ -1,6 +1,8 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.Button
@@ -16,11 +18,32 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 
+data class Tarea(val nombre: String)
+
+val tareas = listOf(
+    Tarea("Spiderman Home alone"),
+    Tarea("Ventanas furiosas"),
+    Tarea("Pistolas de goma"),
+    Tarea("Turistas asiaticos simulator"),
+    Tarea("Software cocina"),
+    Tarea("Ciudania descontrolada"),
+    Tarea("Robo minoristas 2"),
+    Tarea("Alexsoft Rework"),
+    Tarea("Subnautica 4"),
+    Tarea("Torrente 2 Rework")
+)
+
 class ProyectScreen(val nombre: String) : Screen {
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.current
+        val lorem = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
+                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
+                "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
+                "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
+                "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
+                "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 
         Column(
             modifier = Modifier
@@ -55,7 +78,7 @@ class ProyectScreen(val nombre: String) : Screen {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Proyecto $nombre",
+                        text = "Proyecto: $nombre",
                         color = Color.White,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
@@ -64,7 +87,25 @@ class ProyectScreen(val nombre: String) : Screen {
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Menu de opciones
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xFF6200EA))
+                    .padding(8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Descripcion",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -74,12 +115,76 @@ class ProyectScreen(val nombre: String) : Screen {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Text(
-                    text = "Historial (Proyectos finalizados)",
+                    text = lorem,
+                    fontSize = 18.sp,
+                    color = Color.Black,
+                    fontStyle = FontStyle.Italic
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color.White)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Text(
+                    text = "Tareas",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Lista de proyectos
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color.White)
+                    .padding(16.dp)
+            ) {
+                items(tareas) { tarea ->
+                    TareaItem(tarea)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TareaItem(tareas: Tarea){
+
+    val navigator = LocalNavigator.current
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(8.dp))
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = tareas.nombre,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+        }
+        Button(
+            onClick = {
+                navigator?.push(ProyectScreen(tareas.nombre))
+            },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
+        ) {
+            Text(text = "Ver", color = Color.White)
         }
     }
 }
