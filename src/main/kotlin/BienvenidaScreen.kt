@@ -1,6 +1,8 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.Button
@@ -15,6 +17,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+
+data class ProyectoFinalizado(val nombre: String, val fecha: String)
+
+val proyectosTerminados = listOf(
+    ProyectoFinalizado("DANA", "29/10/2024"),
+    ProyectoFinalizado("Robo a minoristas", "7/7/2018"),
+    ProyectoFinalizado("Funcionarios locos", "8/11/2020"),
+    ProyectoFinalizado("Turistas de peru", "29/2/1980"),
+    ProyectoFinalizado("Problemas en casa", "14/6/2015"),
+    ProyectoFinalizado("Ciudania descontrolada", "N/A"),
+    ProyectoFinalizado("Problemas genitales", "N/A"),
+    ProyectoFinalizado("Viaje a malvinas", "N/A")
+)
 
 class WelcomeScreen : Screen {
     @Composable
@@ -95,22 +110,27 @@ class WelcomeScreen : Screen {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Menu de opciones
-            Column(
+            Text(
+                text = "Historial (Proyectos finalizados)",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp))
                     .background(Color.White)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(16.dp)
+                    .height(300.dp)
             ) {
-                Text(
-                    text = "Historial (Proyectos finalizados)",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-                Proyecto("DANA", "29/10/2024")
-                Proyecto("Robo a minoristas", "7/6/2018")
+                items(proyectosTerminados) { proyectoF ->
+                    Proyecto(proyectoF)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -147,7 +167,7 @@ class WelcomeScreen : Screen {
 }
 
 @Composable
-fun Proyecto(titulo: String, fecha: String) {
+fun Proyecto(proyectosTerminados: ProyectoFinalizado) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -156,14 +176,22 @@ fun Proyecto(titulo: String, fecha: String) {
             .padding(horizontal = 16.dp),
         contentAlignment = Alignment.CenterStart
     ) {
+        Row {
+            Text(
+                text = proyectosTerminados.nombre,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Text(
+                text = " (Finalizado)",
+                fontSize = 18.sp,
+                color = Color.Gray,
+                fontStyle = FontStyle.Italic
+            )
+        }
         Text(
-            text = titulo,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-        Text(
-            text = fecha,
+            text = proyectosTerminados.fecha,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic,
