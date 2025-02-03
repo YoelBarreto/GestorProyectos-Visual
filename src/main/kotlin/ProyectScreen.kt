@@ -44,6 +44,7 @@ class ProyectScreen(val nombre: String) : Screen {
                 "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
                 "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
                 "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+
         val info = "Fecha creación: 2024-01-01 \n" +
                 "Fecha inicio: 2024-01-01 \n" +
                 "Fecha finalización: 2024-01-01 \n" +
