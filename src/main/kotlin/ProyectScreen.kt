@@ -44,120 +44,172 @@ class ProyectScreen(val nombre: String) : Screen {
                 "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
                 "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
                 "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        val info = "Fecha creación: 2024-01-01 \n" +
+                "Fecha inicio: 2024-01-01 \n" +
+                "Fecha finalización: 2024-01-01 \n" +
+                "CLIENTE: @viviendoenlacalle"
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(0xFFf5f5f5))
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp) // Espaciado entre los items
         ) {
             // Header con botón Volver
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color(0xFF6200EA))
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Button(
-                    onClick = {
-                        navigator?.pop()
-                    },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                    modifier = Modifier.padding(end = 8.dp)
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color(0xFF6200EA))
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Volver", color = Color(0xFF6200EA))
-                }
+                    Button(
+                        onClick = {
+                            navigator?.pop()
+                        },
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                        modifier = Modifier.padding(end = 8.dp)
+                    ) {
+                        Text(text = "Volver", color = Color(0xFF6200EA))
+                    }
 
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Proyecto: $nombre",
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+
+            // Título de descripción
+            item {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(60.dp),
+                        .height(60.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color(0xFF6200EA))
+                        .padding(8.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Proyecto: $nombre",
+                        text = "Descripción",
                         color = Color.White,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color(0xFF6200EA))
-                    .padding(8.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Descripcion",
-                    color = Color.White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
+            // Contenido de descripción
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.White)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text(
+                        text = lorem,
+                        fontSize = 18.sp,
+                        color = Color.Black,
+                        fontStyle = FontStyle.Italic
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Text(
-                    text = lorem,
-                    fontSize = 18.sp,
-                    color = Color.Black,
-                    fontStyle = FontStyle.Italic
-                )
+            // Sección de Tareas
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.White)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text(
+                        text = "Tareas",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                }
+            }
+            item {
+                Box(
+                    modifier = Modifier.height(300.dp)
+                ) {
+                    // Lista de proyectos
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Color.White)
+                            .padding(16.dp)
+                    ) {
+                        items(tareas) { tarea ->
+                            TareaItem(tarea)
+                            Spacer(modifier = Modifier.height(12.dp))
+                        }
+                    }
+                }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Text(
-                    text = "Tareas",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color(0xFF6200EA))
+                        .padding(8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Información",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Lista de proyectos
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(16.dp)
-            ) {
-                items(tareas) { tarea ->
-                    TareaItem(tarea)
-                    Spacer(modifier = Modifier.height(12.dp))
+            // Contenido de información
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.White)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text(
+                        text = info,
+                        fontSize = 18.sp,
+                        color = Color.Black,
+                        fontStyle = FontStyle.Italic
+                    )
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun TareaItem(tarea: Tarea){
