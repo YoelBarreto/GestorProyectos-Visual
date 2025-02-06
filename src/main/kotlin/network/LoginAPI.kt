@@ -13,7 +13,7 @@ import network.NetworkUtils.httpClient
 import utils.sha512
 
 fun apiLogIn(usuario: String, password: String, onSuccessResponse: (User) -> Unit) {
-    val url = "http://127.0.0.1:5000/login"
+    val url = "http://127.0.0.1:5000/gestor/login"
     CoroutineScope(Dispatchers.IO).launch {
         val response = httpClient.post(url) {
             contentType(ContentType.Application.Json)
