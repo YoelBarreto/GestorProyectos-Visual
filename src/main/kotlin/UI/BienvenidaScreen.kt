@@ -54,7 +54,7 @@ class WelcomeScreen(val user : User) : Screen {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Bienvenido, Pedro Sanchez (Administrador de izquierdas)",
+                    text = "Bienvenido, ${user.nombre} (Gestor)",
                     color = Color.White,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
