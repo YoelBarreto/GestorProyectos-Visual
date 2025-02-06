@@ -1,6 +1,5 @@
-package model
+package UI
 
-import UI.WelcomeScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import network.apiLogIn
 
 class LoginScreen : Screen {
     @Composable
@@ -63,7 +63,13 @@ class LoginScreen : Screen {
                 )
                 Button(
                     onClick = {
-                        navigator?.push(WelcomeScreen())
+                        if (user.isNotEmpty() && passwd.isNotEmpty()) {
+                            apiLogIn(user, passwd) { usuario ->
+                                user = ""
+                                passwd = ""
+                                navigator?.push(WelcomeScreen(usuario))
+                            }
+                        }
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {

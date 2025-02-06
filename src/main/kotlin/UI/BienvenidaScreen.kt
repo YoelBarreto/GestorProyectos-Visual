@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import model.User
 
 data class ProyectoFinalizado(val nombre: String, val fecha: String)
 
@@ -32,7 +33,7 @@ val proyectosTerminados = listOf(
     ProyectoFinalizado("Viaje a malvinas", "N/A")
 )
 
-class WelcomeScreen : Screen {
+class WelcomeScreen(val user : User) : Screen {
     @Composable
     override fun Content() {
 
