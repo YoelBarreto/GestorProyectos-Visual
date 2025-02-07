@@ -16,37 +16,49 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import model.Proyecto
+import model.User
+import network.apiGestorProyects
+import network.apiProyects
 import kotlin.random.Random
 
 // Datos temporales para los proyectos
 
-data class Proyecto(val nombre: String, val clientes: List<String>)
+//data class Project(val nombre: String, val clientes: List<String>)
 
-fun generarClientes(): List<String> {
-    val posiblesClientes = listOf("Juan Pérez", "María López", "Carlos Gómez", "Ana Martínez", "Pedro Sánchez")
-    return posiblesClientes.shuffled().take(Random.nextInt(1, 4))
-}
+//fun generarClientes(): List<String> {
+//    val posiblesClientes = listOf("Juan Pérez", "María López", "Carlos Gómez", "Ana Martínez", "Pedro Sánchez")
+//    return posiblesClientes.shuffled().take(Random.nextInt(1, 4))
+//}
 
-val proyectos = listOf(
-    Proyecto("Spiderman Home alone", generarClientes()),
-    Proyecto("Ventanas furiosas", generarClientes()),
-    Proyecto("Pistolas de goma", generarClientes()),
-    Proyecto("Turistas asiaticos simulator", generarClientes()),
-    Proyecto("Software cocina", generarClientes()),
-    Proyecto("Ciudania descontrolada", generarClientes()),
-    Proyecto("Robo minoristas 2", generarClientes()),
-    Proyecto("Alexsoft Rework", generarClientes()),
-    Proyecto("Subnautica 4", generarClientes()),
-    Proyecto("Torrente 2 Rework", generarClientes())
-)
+//val projects = listOf(
+//    Project("Spiderman Home alone", generarClientes()),
+//    Project("Ventanas furiosas", generarClientes()),
+//    Project("Pistolas de goma", generarClientes()),
+//    Project("Turistas asiaticos simulator", generarClientes()),
+//    Project("Software cocina", generarClientes()),
+//    Project("Ciudania descontrolada", generarClientes()),
+//    Project("Robo minoristas 2", generarClientes()),
+//    Project("Alexsoft Rework", generarClientes()),
+//    Project("Subnautica 4", generarClientes()),
+//    Project("Torrente 2 Rework", generarClientes())
+//)
 
 
 
-class ProyectosScreen : Screen {
+class ProyectosScreen(val user: User) : Screen{
     @Composable
     override fun Content() {
         var filter by remember { mutableStateOf(true)}
         val navigator = LocalNavigator.current
+        val proyectList = remember { mutableStateOf(emptyList<model.Proyecto>()) }
+        apiProyects {
+            proyectList.value = it
+        }
+        val mineProyectList = remember { mutableStateOf(emptyList<model.Proyecto>()) }
+        apiGestorProyects(user.idGestor) {
+            mineProyectList.value = it
+        }
 
         Column(
             modifier = Modifier
@@ -120,16 +132,32 @@ class ProyectosScreen : Screen {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Lista de proyectos
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(16.dp)
-            ) {
-                items(proyectos) { proyecto ->
-                    ProyectoItem(proyecto)
-                    Spacer(modifier = Modifier.height(12.dp))
+            if (filter) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.White)
+                        .padding(16.dp)
+                ) {
+                    items(proyectList.value) {
+                        ProyectoItem(it)
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
+                }
+                // Mis proyectos
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.White)
+                        .padding(16.dp)
+                ) {
+                    items(mineProyectList.value) {
+                        ProyectoItem(it)
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
                 }
             }
         }
@@ -154,18 +182,10 @@ fun ProyectoItem(proyecto: Proyecto){
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Clientes: ${proyecto.clientes.joinToString(", ")}",
-                fontSize = 16.sp,
-                color = Color.DarkGray
-            )
         }
         Button(
             onClick = {
-                navigator?.push(ProyectScreen(proyecto.nombre))
+                // navigator?.push(ProyectScreen(project.nombre))
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
         ) {
