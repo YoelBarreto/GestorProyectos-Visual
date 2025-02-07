@@ -19,7 +19,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import model.Proyecto
 import model.User
 import network.apiGestorProyects
-import network.apiLogIn
 import network.apiProyects
 
 // Datos temporales para los proyectos
