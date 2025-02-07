@@ -1,5 +1,8 @@
 package model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Proyecto(
     val id: Int,
     val nombre: String,
