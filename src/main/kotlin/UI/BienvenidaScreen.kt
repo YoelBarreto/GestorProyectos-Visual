@@ -105,7 +105,7 @@ class WelcomeScreen(val user : User) : Screen {
                 )
                 Button(
                     onClick = {
-                        navigator?.push(ProyectosScreen())
+                        navigator?.push(ProyectosScreen(user))
                     },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
                 ) {
