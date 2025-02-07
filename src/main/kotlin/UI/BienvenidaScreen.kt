@@ -8,6 +8,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import model.User
+import model.Proyecto
+import network.apiPastProyects
 
 data class ProyectoFinalizado(val nombre: String, val fecha: String)
 
@@ -38,6 +42,10 @@ class WelcomeScreen(val user : User) : Screen {
     override fun Content() {
 
         val navigator = LocalNavigator.current
+        val historyList = remember { mutableStateOf(emptyList<Proyecto>()) }
+        apiPastProyects {
+            historyList.value = it
+        }
 
         Column(
             modifier = Modifier
@@ -121,21 +129,36 @@ class WelcomeScreen(val user : User) : Screen {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(16.dp)
-                    .height(300.dp)
-            ) {
-                items(proyectosTerminados) { proyectoF ->
-                    Proyecto(proyectoF)
-                    Spacer(modifier = Modifier.height(12.dp))
+            if (historyList.value.isNotEmpty()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.White)
+                        .padding(16.dp)
+                        .height(300.dp)
+                ) {
+                    items(historyList.value) {
+                        Proyecto(it)
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
                 }
+                Spacer(modifier = Modifier.weight(1f))
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.White)
+                        .padding(16.dp)
+                        .height(300.dp)
+                ) {
+                    item{
+                        Text("N/A")
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
             }
-
-            Spacer(modifier = Modifier.weight(1f))
 
             Row(
                 modifier = Modifier
@@ -169,7 +192,7 @@ class WelcomeScreen(val user : User) : Screen {
 }
 
 @Composable
-fun Proyecto(proyectosTerminados: ProyectoFinalizado) {
+fun Proyecto(proyecto: Proyecto) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -180,7 +203,7 @@ fun Proyecto(proyectosTerminados: ProyectoFinalizado) {
     ) {
         Row {
             Text(
-                text = proyectosTerminados.nombre,
+                text = proyecto.nombre,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
@@ -193,7 +216,7 @@ fun Proyecto(proyectosTerminados: ProyectoFinalizado) {
             )
         }
         Text(
-            text = proyectosTerminados.fecha,
+            text = "${proyecto.fecha_finalizacion}",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic,
