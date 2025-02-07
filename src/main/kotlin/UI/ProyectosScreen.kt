@@ -19,6 +19,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import model.Proyecto
 import model.User
 import network.apiGestorProyects
+import network.apiLogIn
 import network.apiProyects
 
 // Datos temporales para los proyectos
@@ -184,7 +185,7 @@ fun ProyectoItem(proyecto: Proyecto){
         }
         Button(
             onClick = {
-                // navigator?.push(ProyectScreen(project.nombre))
+                navigator?.push(ProyectScreen(proyecto))
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EA))
         ) {
